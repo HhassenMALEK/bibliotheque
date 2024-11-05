@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "LIVRE")
-public class Livre {
+public class Livre implements java.io.Serializable{
 
     @Id
     @Column(name = "ID") // pour ressembler au nom des colonnes de la base ;
@@ -21,10 +21,9 @@ public class Livre {
   @Column(name = "AUTEUR")
     private String auteur;
 
-    public Livre(){}
 
     public Livre(String titre) {
-        this(null, titre, "");
+        this(null, "", "");
     }
 
     public Livre(String titre, String auteur) {
@@ -113,5 +112,6 @@ public class Livre {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
 

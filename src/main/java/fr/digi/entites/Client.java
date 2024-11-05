@@ -1,15 +1,28 @@
 package fr.digi.entites;
 
-public class Client {
+import jakarta.persistence.*;
+
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
+@Table(name = "CLIENT")
+public class Client implements java.io.Serializable{
+
+    @Id
+    @Column(name = "ID")
     int id;
+
+    @Column(name = "NOM")
     String nom;
+
+    @Column(name = "PRENOM")
     String prenom;
 
-    public Client(int id, String prenom, String nom) {
-        this.id = id;
-        this.prenom = prenom;
-        this.nom = nom;
-    }
+    @OneToMany(mappedBy = "client")
+    private Set<Emprunt> emprunt;
+
+    public Client(){}
 
     /**
      * Getter
@@ -27,6 +40,24 @@ public class Client {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Getter
+     *
+     * @return nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * Setter
+     *
+     * @param nom nom
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     /**
@@ -50,18 +81,41 @@ public class Client {
     /**
      * Getter
      *
-     * @return nom
+     * @return Emprunt
      */
-    public String getNom() {
-        return nom;
+    public Set<fr.digi.entites.Emprunt> getEmprunt() {
+        return emprunt;
     }
 
     /**
      * Setter
      *
-     * @param nom nom
+     * @param Emprunt Emprunt
      */
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setEmprunt(Set<fr.digi.entites.Emprunt> Emprunt) {
+        Emprunt =Emprunt;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Client{");
+        sb.append("id=").append(id);
+        sb.append(", nom='").append(nom).append('\'');
+        sb.append(", prenom='").append(prenom).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && Objects.equals(nom, client.nom) && Objects.equals(prenom, client.prenom) && Objects.equals(emprunt, client.emprunt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nom, prenom, emprunt);
     }
 }
